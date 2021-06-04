@@ -1,29 +1,29 @@
 //случайное положительное целое из диапазона [start, finish]
 function getRandomInt (startRange, finishRange) {
-  if ((startRange < 0) || (finishRange < 0)) {
-    return 'Значения границ диапазона должны быть больше нуля';
+  if (startRange < 0 || finishRange < 0) {
+    throw new Error('Значения границ диапазона не должны быть отрицательными');
   }
-  else if (startRange >= finishRange) {
-    return 'Начальная граница диапазона должна быть строго больше конечной';
+  else if (startRange > finishRange) {
+    throw new Error('Начальная граница диапазона должна быть больше или равна конечной');
   }
-  return Math.floor(Math.random() * (finishRange - startRange)) + startRange;
+  else if (startRange === finishRange) {
+    return 0;
+  }
+  return Math.floor(Math.random() * (finishRange + 1 - startRange)) + startRange;
 }
 
-function getRanfomFloat (startRange, finishRange, accuracy) {
-  if ((startRange < 0) || (finishRange < 0)) {
-    return 'Значения границ диапазона должны быть больше нуля';
+function getRandomNumber (startRange, finishRange, accuracy) {
+  if (startRange < 0 || finishRange < 0 || accuracy < 0) {
+    throw new Error('Значения параметров не должны быть отрицательными');
   }
-  else if (startRange >= finishRange) {
-    return 'Начальная граница диапазона должна быть строго больше конечной';
+  else if (startRange > finishRange) {
+    throw new Error('Начальная граница диапазона должна быть больше или равна конечной');
   }
-  return (Math.random() * (finishRange - startRange) + startRange).toFixed(accuracy);
+  else if (startRange === finishRange) {
+    return 0;
+  }
+  return parseFloat((Math.random() * (finishRange - startRange) + startRange).toFixed(accuracy));
 }
 
-const randomInt = getRandomInt(5, 15);
-const randomFloat = getRanfomFloat(5.5123, 13.3, 4);
-
-
-// eslint-disable-next-line no-console
-console.log(randomInt);
-// eslint-disable-next-line no-console
-console.log(randomFloat);
+getRandomInt(0, 5);
+getRandomNumber(5.5123, 13.3, 4);
