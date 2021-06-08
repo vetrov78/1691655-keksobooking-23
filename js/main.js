@@ -23,15 +23,27 @@ getRandomInt(0, 5);
 getRandomNumber(5.5123, 13.3, 4);
 
 const ADS_NUMBER = 10;
+const COORDINATE_ACCURACY = 5;
+const LATITUDE_MIN = 35.65000;
+const LATITUDE_MAX = 35.70000;
+const LONGITUDE_MIN = 139.70000;
+const LONGITUDE_MAX = 139.80000;
 
 const createNew = () => ({
+  // author, объект — описывает автора. Содержит одно поле:
+  //    avatar, строка — адрес изображения вида img/avatars/user{{xx}}.png, где {{xx}} — это число от 1 до 8 с ведущим нулём. Например, 01, 02 и т. д. Адреса изображений не повторяются.
   author: {
-    avatar: 'img/avatars/user0' + + '.png',
+    avatar: `img/avatars/user0${getRandomInt(0,8)}.png`,
+  },
+  // location, объект — местоположение в виде географических координат. Состоит из двух полей:
+  // lat, число с плавающей точкой — широта, случайное значение от 35.65000 до 35.70000.
+  // lng, число с плавающей точкой — долгота, случайное значение от 139.70000 до 139.80000.
+  location: {
+    lat: getRandomNumber(LATITUDE_MIN, LATITUDE_MAX, COORDINATE_ACCURACY),
+    lng: getRandomNumber(LONGITUDE_MIN, LONGITUDE_MAX, COORDINATE_ACCURACY),
   },
 });
 
-// author, объект — описывает автора. Содержит одно поле:
-//    avatar, строка — адрес изображения вида img/avatars/user{{xx}}.png, где {{xx}} — это число от 1 до 8 с ведущим нулём. Например, 01, 02 и т. д. Адреса изображений не повторяются.
 
 // offer, объект — содержит информацию об объявлении. Состоит из полей:
 
@@ -57,12 +69,7 @@ const createNew = () => ({
 
 // photos, массив строк — массив случайной длины из значений: https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg, https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg, https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg.
 
-// location, объект — местоположение в виде географических координат. Состоит из двух полей:
+const randomAdsArray = new Array(ADS_NUMBER).fill().map(createNew);
 
-// lat, число с плавающей точкой — широта, случайное значение от 35.65000 до 35.70000.
-
-// lng, число с плавающей точкой — долгота, случайное значение от 139.70000 до 139.80000.
-
-const randomAdsArray = new Array(ADS_NUMBER).fill().map(createNew());
-
-randomAdsArray();
+// eslint-disable-next-line no-console
+console.log(randomAdsArray);
