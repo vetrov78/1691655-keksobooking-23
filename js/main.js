@@ -1,3 +1,5 @@
+import {getRandomInt, getRandomNumber, getRandomArrayElement, getRandomArrayFromArray} from './utils/utils.js';
+
 const ADS_NUMBER = 10;
 const AVATAR_NUMBERS = Array.from({length: ADS_NUMBER}, (v,k)=>`0${k+1}`.slice(-2));
 const COORDINATE_ACCURACY = 5;
@@ -16,41 +18,6 @@ const PHOTOS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
 ];
-
-//случайное положительное целое из диапазона
-function getRandomInt (startRange, finishRange) {
-  if (startRange < 0 || finishRange < 0) {
-    throw new Error('Значения границ диапазона не должны быть отрицательными');
-  }
-  else if (startRange > finishRange) {
-    throw new Error('Начальная граница диапазона не должна быть больше конечной');
-  }
-  else if (startRange === finishRange) {
-    return startRange;
-  }
-  return Math.floor(Math.random() * (finishRange + 1 - startRange)) + startRange;
-}
-
-function getRandomNumber (startRange, finishRange, accuracy) {
-  if (startRange < 0 || finishRange < 0 || accuracy < 0) {
-    throw new Error('Значения параметров не должны быть отрицательными');
-  }
-  else if (startRange >= finishRange) {
-    throw new Error('Начальная граница диапазона не должна быть больше или равна конечной');
-  }
-  return parseFloat((Math.random() * (finishRange - startRange) + startRange).toFixed(accuracy));
-}
-
-const getRandomArrayElement = (elements) => elements[getRandomInt(0, elements.length - 1)];
-
-const getRandomArrayFromArray = (elements) => {
-  const resultArray = [...elements];
-  const resultLength = getRandomInt(1, elements.length);
-  for (let i = 0; i < elements.length - resultLength; i++) {
-    resultArray.splice(getRandomInt(0, resultArray.length - 1), 1);
-  }
-  return resultArray;
-};
 
 const getRandomAvatarNumber = () => AVATAR_NUMBERS.splice(getRandomInt(0, AVATAR_NUMBERS.length - 1), 1);
 
@@ -95,6 +62,6 @@ const createNewAd = () => {
   };
 };
 
-const randomAds = new Array(ADS_NUMBER).fill().map(createNewAd);
+export const randomAds = new Array(ADS_NUMBER).fill().map(createNewAd);
 
-randomAds.values;
+randomAds.length;
