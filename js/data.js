@@ -47,7 +47,7 @@ const createNewAd = () => {
     // description, строка — описание помещения. Придумайте самостоятельно.
     // photos, массив строк — массив случайной длины из значений: https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg, https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg, https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg.
     offer: {
-      title: 'Заголовок предложения',
+      title: `Заголовок предложения ${lat.toString().slice(-3)}`,
       address: `${lat}, ${lng}`,
       price: getRandomInt(PRICE_INTERVAL.MIN, PRICE_INTERVAL.MAX),
       type: getRandomArrayElement(FLAT_TYPES),
