@@ -56,7 +56,7 @@ const createNewAd = () => {
       checkin: getRandomArrayElement(CHECK_TIMES),
       checkout: getRandomArrayElement(CHECK_TIMES),
       features: getRandomArrayFromArray(FEATURES),
-      description: 'Описание помещения',
+      description: `Описание помещения (${lat}, ${lng})`,
       photos: getRandomArrayFromArray(PHOTOS),
     },
   };
