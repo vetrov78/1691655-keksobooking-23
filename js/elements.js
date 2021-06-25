@@ -53,8 +53,10 @@ randomAds.forEach((ad) => {
   newAdItem.querySelector('.popup__photos').children[0].remove();
   newAdItem.querySelector('.popup__photos').appendChild(photosList);
 
+  newAdItem.querySelector('.popup__avatar').src = ad.author.avatar;
+
   // eslint-disable-next-line no-console
-  console.log(newAdItem);
+  // console.log(newAdItem);
 
   newAdItem.classList.add('visually-hidden');
   adsList.appendChild(newAdItem);
