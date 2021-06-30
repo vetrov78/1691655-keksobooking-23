@@ -50,9 +50,15 @@ const apartmentCapacityInput = document.querySelector('#capacity');
 const isProperRelation = function (){
   return roomsGuestsRelation[roomNumberInput.value].includes(apartmentCapacityInput.value);
 };
-
+//соответствие числа гостей количеству комнат
 apartmentCapacityInput.addEventListener('change', () => {
   if (!isProperRelation()) {apartmentCapacityInput.setCustomValidity('Недопустимое число гостей');}
   else {apartmentCapacityInput.setCustomValidity('');}
   apartmentCapacityInput.reportValidity();
+});
+//соответствие числа комнат количеству гостей
+roomNumberInput.addEventListener('change', ()=>{
+  if (!isProperRelation()) {roomNumberInput.setCustomValidity('Несоответствие: комнаты-гости!!');}
+  else {roomNumberInput.setCustomValidity('');}
+  roomNumberInput.reportValidity();
 });
