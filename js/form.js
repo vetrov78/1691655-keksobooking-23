@@ -1,5 +1,18 @@
 const MIN_NAME_LENGTH = 30;
 const MAX_NAME_LENGTH = 100;
+const relationRoomsGuests = {
+  '1':'1',
+  '2':['1', '2'],
+  '3':['1', '2', '3'],
+  '100': '0',
+};
+const relationTypeMinPrice = {
+  'bungalow': 0,
+  'flat': 1000,
+  'hotel': 3000,
+  'house': 5000,
+  'palace': 10000,
+};
 
 //неактивное состояние - добавляет форме класс formName, всем дочерним элементам - св-во disabled
 function setFormDisabled (formName, disableClassName) {
@@ -20,11 +33,9 @@ setFormDisabled(adForm, 'ad-form--disabled');
 
 const mapFiltersForm  = document.querySelector('.map__filters');
 setFormDisabled(mapFiltersForm, 'ad-form--disabled');
-
 setFormEnabled(adForm, 'ad-form--disabled');
 
 const titleInput = document.querySelector('#title');
-
 titleInput.addEventListener('input', () => {
   const valueLength = titleInput.value.length;
   if (valueLength < MIN_NAME_LENGTH) {
@@ -37,18 +48,15 @@ titleInput.addEventListener('input', () => {
   titleInput.reportValidity();
 });
 
-const roomsGuestsRelation = {
-  '1':'1',
-  '2':['1', '2'],
-  '3':['1', '2', '3'],
-  '100': '0',
-};
-
 const roomNumberInput = document.querySelector('#room_number');
 const apartmentCapacityInput = document.querySelector('#capacity');
+const apartmentTypeInput = document.querySelector('#type');
+const priceInput = document.querySelector('#price');
+const timeInInput = document.querySelector('#timein');
+const timeOutInput = document.querySelector('#timeout');
 
 const isProperRelation = function (){
-  return roomsGuestsRelation[roomNumberInput.value].includes(apartmentCapacityInput.value);
+  return relationRoomsGuests[roomNumberInput.value].includes(apartmentCapacityInput.value);
 };
 //соответствие числа гостей количеству комнат
 apartmentCapacityInput.addEventListener('change', () => {
@@ -57,8 +65,34 @@ apartmentCapacityInput.addEventListener('change', () => {
   apartmentCapacityInput.reportValidity();
 });
 //соответствие числа комнат количеству гостей
-roomNumberInput.addEventListener('change', ()=>{
+roomNumberInput.addEventListener('change', () => {
   if (!isProperRelation()) {roomNumberInput.setCustomValidity('Несоответствие: комнаты-гости!!');}
   else {roomNumberInput.setCustomValidity('');}
   roomNumberInput.reportValidity();
+});
+//добавляем атрибуты в поле ввода цены
+priceInput.min = relationTypeMinPrice[apartmentTypeInput.value];
+priceInput.placeholder = relationTypeMinPrice[apartmentTypeInput.value];
+const isProperPrice = function () {
+  if (parseInt(priceInput.value, 10) < parseInt(priceInput.min, 10)) {
+    priceInput.setCustomValidity(`Цена должна быть выше ${priceInput.min}`);
+  } else {priceInput.setCustomValidity('');}
+  priceInput.reportValidity();
+};
+//при изменении типа жилья изменяется и минимальная цена
+apartmentTypeInput.addEventListener('change', () => {
+  priceInput.min = relationTypeMinPrice[apartmentTypeInput.value];
+  priceInput.placeholder = relationTypeMinPrice[apartmentTypeInput.value];
+  isProperPrice();
+});
+//валидация цены за ночь
+priceInput.addEventListener('change', () => {
+  isProperPrice();
+});
+//синхронизация времени заезда-выезда
+timeInInput.addEventListener('change', () => {
+  timeOutInput.value = timeInInput.value;
+});
+timeOutInput.addEventListener('change', () => {
+  timeInInput.value = timeOutInput.value;
 });

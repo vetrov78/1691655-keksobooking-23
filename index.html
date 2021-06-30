@@ -100,9 +100,9 @@
           <label class="ad-form__label" for="type">Тип жилья</label>
           <select id="type" name="type">
             <option value="bungalow">Бунгало</option>
-            <option value="flat" selected>Квартира</option>
+            <option value="flat">Квартира</option>
             <option value="hotel">Отель</option>
-            <option value="house">Дом</option>
+            <option value="house" selected>Дом</option>
             <option value="palace">Дворец</option>
           </select>
         </fieldset>
@@ -111,6 +111,7 @@
           <label class="ad-form__label" for="price">Цена за ночь, руб.</label>
           <input id="price" name="price" type="number" max="1e+6" placeholder="5000" required>
         </fieldset>
+        <!-- время заезда-выезда -->
         <fieldset class="ad-form__element ad-form__element--time">
           <label class="ad-form__label" for="timein">Время заезда и выезда</label>
           <select id="timein" name="timein">
@@ -144,6 +145,7 @@
             <option value="0">не для гостей</option>
           </select>
         </fieldset>
+        <!-- Удобства -->
         <fieldset class="ad-form__element ad-form__element--wide features">
           <legend>Удобства: Wi-Fi, кухня, парковка, стиралка, лифт, кондиционер</legend>
           <input class="features__checkbox visually-hidden" type="checkbox" name="feature" value="wifi" id="feature-wifi">
