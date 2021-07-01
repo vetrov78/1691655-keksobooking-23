@@ -58,37 +58,55 @@ const timeOutInput = document.querySelector('#timeout');
 const isProperRelation = function (){
   return relationRoomsGuests[roomNumberInput.value].includes(apartmentCapacityInput.value);
 };
+
 //соответствие числа гостей количеству комнат
 apartmentCapacityInput.addEventListener('change', () => {
-  if (!isProperRelation()) {apartmentCapacityInput.setCustomValidity('Недопустимое число гостей');}
-  else {apartmentCapacityInput.setCustomValidity('');}
+  if (!isProperRelation()) {
+    apartmentCapacityInput.setCustomValidity('Недопустимое число гостей');
+  }
+  else {
+    apartmentCapacityInput.setCustomValidity('');
+    roomNumberInput.setCustomValidity('');
+  }
   apartmentCapacityInput.reportValidity();
 });
+
 //соответствие числа комнат количеству гостей
 roomNumberInput.addEventListener('change', () => {
-  if (!isProperRelation()) {roomNumberInput.setCustomValidity('Несоответствие: комнаты-гости!!');}
-  else {roomNumberInput.setCustomValidity('');}
+  if (!isProperRelation()) {
+    roomNumberInput.setCustomValidity('Несоответствие: комнаты-гости!');
+  }
+  else {
+    roomNumberInput.setCustomValidity('');
+    apartmentCapacityInput.setCustomValidity('');
+  }
   roomNumberInput.reportValidity();
 });
+
 //добавляем атрибуты в поле ввода цены
 priceInput.min = relationTypeMinPrice[apartmentTypeInput.value];
 priceInput.placeholder = relationTypeMinPrice[apartmentTypeInput.value];
 const isProperPrice = function () {
   if (parseInt(priceInput.value, 10) < parseInt(priceInput.min, 10)) {
-    priceInput.setCustomValidity(`Цена должна быть выше ${priceInput.min}`);
-  } else {priceInput.setCustomValidity('');}
+    priceInput.setCustomValidity(`Цена должна быть ${priceInput.min} и выше`);
+  } else {
+    priceInput.setCustomValidity('');
+  }
   priceInput.reportValidity();
 };
+
 //при изменении типа жилья изменяется и минимальная цена
 apartmentTypeInput.addEventListener('change', () => {
   priceInput.min = relationTypeMinPrice[apartmentTypeInput.value];
   priceInput.placeholder = relationTypeMinPrice[apartmentTypeInput.value];
   isProperPrice();
 });
+
 //валидация цены за ночь
 priceInput.addEventListener('change', () => {
   isProperPrice();
 });
+
 //синхронизация времени заезда-выезда
 timeInInput.addEventListener('change', () => {
   timeOutInput.value = timeInInput.value;
