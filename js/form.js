@@ -114,3 +114,6 @@ timeInInput.addEventListener('change', () => {
 timeOutInput.addEventListener('change', () => {
   timeInInput.value = timeOutInput.value;
 });
+
+const button = document.querySelector('.ad-form__submit');
+button.addEventListener('click', () => {console.log(apartmentCapacityInput.value);});
