@@ -85,28 +85,33 @@
             <p class="ad-form-header__info">Заполните все обязательные поля, назначьте цену, загрузите аватар и фото жилья. Придумайте интересное описание. Оно сделает объявление более живым и привлекательным. Получившееся объявление должно давать гостям полное представление о вашем жилье.</p>
           </div>
         </fieldset>
+        <!-- заголовок -->
         <fieldset class="ad-form__element ad-form__element--wide">
           <label class="ad-form__label" for="title">Заголовок объявления</label>
-          <input id="title" name="title" type="text" placeholder="Милая, уютная квартирка в центре Токио">
+          <input id="title" name="title" type="text" minlength="30" maxlength="100" placeholder="Милая, уютная квартирка в центре Токио" required>
         </fieldset>
+        <!-- адрес -->
         <fieldset class="ad-form__element ad-form__element--wide">
           <label class="ad-form__label" for="address">Адрес (координаты)</label>
-          <input id="address" name="address" type="text">
+          <input id="address" name="address" type="text" required>
         </fieldset>
+        <!-- тип жилья -->
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="type">Тип жилья</label>
           <select id="type" name="type">
             <option value="bungalow">Бунгало</option>
-            <option value="flat" selected>Квартира</option>
+            <option value="flat">Квартира</option>
             <option value="hotel">Отель</option>
-            <option value="house">Дом</option>
+            <option value="house" selected>Дом</option>
             <option value="palace">Дворец</option>
           </select>
         </fieldset>
+        <!-- цена за ночь -->
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="price">Цена за ночь, руб.</label>
-          <input id="price" name="price" type="number" placeholder="5000">
+          <input id="price" name="price" type="number" max="1e+6" placeholder="5000" required>
         </fieldset>
+        <!-- время заезда-выезда -->
         <fieldset class="ad-form__element ad-form__element--time">
           <label class="ad-form__label" for="timein">Время заезда и выезда</label>
           <select id="timein" name="timein">
@@ -120,24 +125,27 @@
             <option value="14:00">Выезд до 14</option>
           </select>
         </fieldset>
+        <!-- количество комнат -->
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="room_number">Количество комнат</label>
           <select id="room_number" name="rooms">
             <option value="1" selected>1 комната</option>
-            <option value="2">2 комнаты</option>
+            <option value="2" >2 комнаты</option>
             <option value="3">3 комнаты</option>
             <option value="100">100 комнат</option>
           </select>
         </fieldset>
+        <!-- количество мест -->
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="capacity">Количество мест</label>
           <select id="capacity" name="capacity">
-            <option value="3" selected>для 3 гостей</option>
+            <option value="1" selected>для 1 гостя</option>
+            <option value="3">для 3 гостей</option>
             <option value="2">для 2 гостей</option>
-            <option value="1">для 1 гостя</option>
             <option value="0">не для гостей</option>
           </select>
         </fieldset>
+        <!-- Удобства -->
         <fieldset class="ad-form__element ad-form__element--wide features">
           <legend>Удобства: Wi-Fi, кухня, парковка, стиралка, лифт, кондиционер</legend>
           <input class="features__checkbox visually-hidden" type="checkbox" name="feature" value="wifi" id="feature-wifi">
