@@ -114,3 +114,5 @@ timeInInput.addEventListener('change', () => {
 timeOutInput.addEventListener('change', () => {
   timeInInput.value = timeOutInput.value;
 });
+
+//на сдачу module8-task2
