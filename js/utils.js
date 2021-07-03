@@ -37,12 +37,12 @@ export const getRandomArrayFromArray = (elements) => {
 };
 
 //переводит форму в неактивное состояние - добавляет класс formName, всем дочерним элементам - св-во disabled
-export function setFormDisabled (formName, disableClassName) {
+export function setFormDisabled (formName, disableClassName='ad-form--disabled') {
   formName.classList.add(disableClassName);
   [...formName.children].forEach((element) => {element.disabled = true;});
 }
 //переводит форму в активное состояние
-export function setFormEnabled (formName, disableClassName) {
+export function setFormEnabled (formName, disableClassName='ad-form--disabled') {
   formName.classList.remove(disableClassName);
   [...formName.children].forEach((element) => {element.disabled = false;});
 }

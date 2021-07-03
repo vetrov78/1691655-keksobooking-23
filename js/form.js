@@ -16,14 +16,14 @@ const relationTypeMinPrice = {
   'palace': 10000,
 };
 
-const adForm  = document.querySelector('.ad-form');
+export const adForm  = document.querySelector('.ad-form');
 adForm.action = 'https://23.javascript.pages.academy/keksobooking';
 adForm.method = 'post';
 adForm.enctype = 'multipart/form-data';
-setFormDisabled(adForm, 'ad-form--disabled');
+setFormDisabled(adForm);
 
-const mapFiltersForm  = document.querySelector('.map__filters');
-setFormDisabled(mapFiltersForm, 'ad-form--disabled');
+export const mapFiltersForm  = document.querySelector('.map__filters');
+setFormDisabled(mapFiltersForm);
 
 const titleInput = document.querySelector('#title');
 titleInput.addEventListener('input', () => {

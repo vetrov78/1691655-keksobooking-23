@@ -1,10 +1,17 @@
+import {adForm, mapFiltersForm} from './form.js';
+import {setFormEnabled} from './utils.js';
+
+const TOKYO_LATITUDE = 35.65858;
+const TOKYO_LONGITUDE = 139.74549;
+
 const map = L.map('map-canvas')
   .on('load', ()=> {
-    console.log('map was initialized');
+    setFormEnabled(adForm);
+    setFormEnabled(mapFiltersForm);
   })
   .setView({
-    lat: 35.658581,
-    lng: 139.745438,
+    lat: TOKYO_LATITUDE,
+    lng: TOKYO_LONGITUDE,
   }, 9);
 
 L.tileLayer(
@@ -13,3 +20,28 @@ L.tileLayer(
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   },
 ).addTo(map);
+
+const mainIcon = L.icon({
+  iconUrl: '../img/main-pin.svg',
+  iconSize: [38, 38],
+  iconAnchor: [19, 0],
+});
+
+const mainMarker = L.marker(
+  {
+    lat: TOKYO_LATITUDE,
+    lng: TOKYO_LONGITUDE,
+  },
+  {
+    icon: mainIcon,
+    draggable: true,
+  },
+);
+
+mainMarker.addTo(map);
+
+mainMarker.on('moveend', (evt) => {
+  const coordinateStr = `${Number(evt.target.getLatLng().lat.toFixed(5))}, ${Number(evt.target.getLatLng().lng.toFixed(5))}`;
+  adForm.querySelector('#address').value = coordinateStr;
+});
+
