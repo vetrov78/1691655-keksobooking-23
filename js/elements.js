@@ -7,9 +7,6 @@ const HOUSE_TYPE = {
   hotel: 'Отель',
 };
 
-//область страницы для отрисовки объявлений
-const adsPlace = document.querySelector('#map-canvas');
-
 //шаблон объявления
 const adTemplateFragment = document.querySelector('#card').content;
 const adTemplate = adTemplateFragment.querySelector('.popup');
@@ -61,7 +58,3 @@ randomAds.forEach((ad) => {
   newAdItem.classList.add('visually-hidden');
   adsList.appendChild(newAdItem);
 });
-
-//отрисуем первый из созданных DOM элементов
-adsList.children[0].classList.remove('visually-hidden');
-adsPlace.appendChild(adsList);

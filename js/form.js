@@ -1,3 +1,5 @@
+import {setFormDisabled} from './utils.js';
+
 const MIN_NAME_LENGTH = 30;
 const MAX_NAME_LENGTH = 100;
 const relationRoomsGuests = {
@@ -14,17 +16,6 @@ const relationTypeMinPrice = {
   'palace': 10000,
 };
 
-//неактивное состояние - добавляет форме класс formName, всем дочерним элементам - св-во disabled
-function setFormDisabled (formName, disableClassName) {
-  formName.classList.add(disableClassName);
-  [...formName.children].forEach((element) => {element.disabled = true;});
-}
-
-function setFormEnabled (formName, disableClassName) {
-  formName.classList.remove(disableClassName);
-  [...formName.children].forEach((element) => {element.disabled = false;});
-}
-
 const adForm  = document.querySelector('.ad-form');
 adForm.action = 'https://23.javascript.pages.academy/keksobooking';
 adForm.method = 'post';
@@ -33,7 +24,6 @@ setFormDisabled(adForm, 'ad-form--disabled');
 
 const mapFiltersForm  = document.querySelector('.map__filters');
 setFormDisabled(mapFiltersForm, 'ad-form--disabled');
-setFormEnabled(adForm, 'ad-form--disabled');
 
 const titleInput = document.querySelector('#title');
 titleInput.addEventListener('input', () => {
@@ -114,5 +104,3 @@ timeInInput.addEventListener('change', () => {
 timeOutInput.addEventListener('change', () => {
   timeInInput.value = timeOutInput.value;
 });
-
-//на сдачу module8-task2
