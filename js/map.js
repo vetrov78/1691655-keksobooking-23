@@ -1,5 +1,6 @@
 import {adForm, mapFiltersForm} from './form.js';
 import {setFormEnabled} from './utils.js';
+import {drawMarkers} from './markers.js';
 
 const TOKYO_LATITUDE = 35.65858;
 const TOKYO_LONGITUDE = 139.74549;
@@ -38,11 +39,10 @@ const mainMarker = L.marker(
     draggable: true,
   },
 );
-
 mainMarker.addTo(map);
-
 mainMarker.on('moveend', (evt) => {
   const coordinateStr = `${Number(evt.target.getLatLng().lat.toFixed(5))}, ${Number(evt.target.getLatLng().lng.toFixed(5))}`;
   adForm.querySelector('#address').value = coordinateStr;
 });
 
+drawMarkers(map);
