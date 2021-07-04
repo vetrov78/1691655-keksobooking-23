@@ -7,12 +7,13 @@ const TOKYO_LONGITUDE = 139.74549;
 const map = L.map('map-canvas')
   .on('load', ()=> {
     setFormEnabled(adForm);
+    adForm.querySelector('#address').readOnly = true;
     setFormEnabled(mapFiltersForm);
   })
   .setView({
     lat: TOKYO_LATITUDE,
     lng: TOKYO_LONGITUDE,
-  }, 9);
+  }, 12);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
