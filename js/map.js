@@ -8,6 +8,7 @@ const TOKYO_LONGITUDE = 139.74549;
 const map = L.map('map-canvas')
   .on('load', ()=> {
     setFormEnabled(adForm);
+    adForm.querySelector('#address').value = `${TOKYO_LATITUDE}, ${TOKYO_LONGITUDE}`;
     adForm.querySelector('#address').readOnly = true;
     setFormEnabled(mapFiltersForm);
   })
