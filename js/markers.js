@@ -1,4 +1,5 @@
 import {randomAds} from './data.js';
+
 const HOUSE_TYPE = {
   flat: 'Квартира',
   bungalow: 'Бунгало',
@@ -7,18 +8,10 @@ const HOUSE_TYPE = {
   hotel: 'Отель',
 };
 
-//область страницы для отрисовки объявлений
-const adsPlace = document.querySelector('#map-canvas');
-
-//шаблон объявления
+//создание содержимого балуна
 const adTemplateFragment = document.querySelector('#card').content;
 const adTemplate = adTemplateFragment.querySelector('.popup');
-
-//контейнер для списка объявлений
-const adsList = document.createDocumentFragment();
-
-//каждое объявление из списка добавляем в контейнер, согласно условию
-randomAds.forEach((ad) => {
+const createCustomPopup = (ad) => {
   const newAdItem = adTemplate.cloneNode(true);
 
   newAdItem.querySelector('.popup__title').textContent = ad.offer.title;
@@ -27,7 +20,6 @@ randomAds.forEach((ad) => {
   newAdItem.querySelector('.popup__type').textContent = HOUSE_TYPE[ad.offer.type];
   newAdItem.querySelector('.popup__text--capacity').textContent = `${ad.offer.rooms} комнаты для ${ad.offer.guests} гостей`;
   newAdItem.querySelector('.popup__text--time').textContent = `${ad.offer.checkin}, выезд до ${ad.offer.checkout}`;
-
   //добавим удобства, в списке шаблона удалим несуществующие в объявлении
   const featuresListElement = newAdItem.querySelector('.popup__features');
   //список названий классов имеющихся удобств в данном объявлении
@@ -40,9 +32,7 @@ randomAds.forEach((ad) => {
         item.remove();
       }
     });
-
   newAdItem.querySelector('.popup__description').textContent = ad.offer.description ? ad.offer.description : null;
-
   const imgTemplate = newAdItem.querySelector('.popup__photo');
   const photosList = document.createDocumentFragment();
   ad.offer.photos.forEach((source) => {
@@ -52,16 +42,32 @@ randomAds.forEach((ad) => {
   });
   newAdItem.querySelector('.popup__photos').children[0].remove();
   newAdItem.querySelector('.popup__photos').appendChild(photosList);
-
   newAdItem.querySelector('.popup__avatar').src = ad.author.avatar;
 
-  // eslint-disable-next-line no-console
-  // console.log(newAdItem);
+  return newAdItem;
+};
+//создание маркера
+const createMarker = (ad, map) => {
+  const currentIcon = L.icon ({
+    iconUrl: '../img/pin.svg',
+    iconSize: [38, 38],
+    iconAnchor: [19, 0],
+  });
+  const currentMarker = L.marker ({
+    lat: ad.location.lat,
+    lng: ad.location.lng,
+  },
+  {
+    icon: currentIcon,
+  });
+  currentMarker
+    .addTo(map)
+    .bindPopup(createCustomPopup(ad));
+};
 
-  newAdItem.classList.add('visually-hidden');
-  adsList.appendChild(newAdItem);
-});
+export const drawMarkers = (map) => {
+  randomAds.forEach((ad) => {
+    createMarker(ad, map);
+  });
+};
 
-//отрисуем первый из созданных DOM элементов
-adsList.children[0].classList.remove('visually-hidden');
-adsPlace.appendChild(adsList);

@@ -1,5 +1,5 @@
 //случайное положительное целое из диапазона
-function getRandomInt (startRange, finishRange) {
+export function getRandomInt (startRange, finishRange) {
   if (startRange < 0 || finishRange < 0) {
     throw new Error('Значения границ диапазона не должны быть отрицательными');
   }
@@ -13,7 +13,7 @@ function getRandomInt (startRange, finishRange) {
 }
 
 //случайное с плавающей точкой из заданного диапазона положительных чисел, с заданной точностью
-function getRandomNumber (startRange, finishRange, accuracy) {
+export function getRandomNumber (startRange, finishRange, accuracy) {
   if (startRange < 0 || finishRange < 0 || accuracy < 0) {
     throw new Error('Значения параметров не должны быть отрицательными');
   }
@@ -24,10 +24,10 @@ function getRandomNumber (startRange, finishRange, accuracy) {
 }
 
 //случайный элемент массива
-const getRandomArrayElement = (elements) => elements[getRandomInt(0, elements.length - 1)];
+export const getRandomArrayElement = (elements) => elements[getRandomInt(0, elements.length - 1)];
 
 //массив случайной длины из заданного массива, в результ.массиве элементы не повторяются
-const getRandomArrayFromArray = (elements) => {
+export const getRandomArrayFromArray = (elements) => {
   const resultArray = [...elements];
   const resultLength = getRandomInt(1, elements.length);
   for (let i = 0; i < elements.length - resultLength; i++) {
@@ -36,4 +36,13 @@ const getRandomArrayFromArray = (elements) => {
   return resultArray;
 };
 
-export {getRandomInt, getRandomNumber, getRandomArrayElement, getRandomArrayFromArray};
+//переводит форму в неактивное состояние - добавляет класс formName, всем дочерним элементам - св-во disabled
+export function setFormDisabled (formName, disableClassName='ad-form--disabled') {
+  formName.classList.add(disableClassName);
+  [...formName.children].forEach((element) => {element.disabled = true;});
+}
+//переводит форму в активное состояние
+export function setFormEnabled (formName, disableClassName='ad-form--disabled') {
+  formName.classList.remove(disableClassName);
+  [...formName.children].forEach((element) => {element.disabled = false;});
+}
