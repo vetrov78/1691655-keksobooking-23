@@ -17,6 +17,20 @@ const relationTypeMinPrice = {
 };
 
 export const adForm  = document.querySelector('.ad-form');
+//убираем автозагрузку формы
+export const setFormSubmit = (onSuccess) => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    fetch('https://23.javascript.pages.academy/keksobooking',
+      {
+        method: 'post',
+        body: new FormData(evt.target),
+      },
+    ).then (() => onSuccess());
+  });
+};
+
 adForm.action = 'https://23.javascript.pages.academy/keksobooking';
 adForm.method = 'post';
 adForm.enctype = 'multipart/form-data';

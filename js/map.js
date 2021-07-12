@@ -1,12 +1,10 @@
 import {adForm, mapFiltersForm} from './form.js';
 import {setFormEnabled} from './utils.js';
-import {drawMarkers} from './markers.js';
 
 const TOKYO_LATITUDE = 35.65858;
 const TOKYO_LONGITUDE = 139.74549;
-const SHOWED_ADS_NUMBER = 4;
 
-const map = L.map('map-canvas')
+export const map = L.map('map-canvas')
   .on('load', ()=> {
     setFormEnabled(adForm);
     adForm.querySelector('#address').value = `${TOKYO_LATITUDE}, ${TOKYO_LONGITUDE}`;
@@ -46,9 +44,3 @@ mainMarker.on('moveend', (evt) => {
   const coordinateStr = `${Number(evt.target.getLatLng().lat.toFixed(5))}, ${Number(evt.target.getLatLng().lng.toFixed(5))}`;
   adForm.querySelector('#address').value = coordinateStr;
 });
-
-fetch('https://23.javascript.pages.academy/keksobooking/data')
-  .then((responce) => responce.json())
-  .then((data) => {
-    drawMarkers(map, data.slice(0, SHOWED_ADS_NUMBER));
-  });
