@@ -4,6 +4,7 @@ import {drawMarkers} from './markers.js';
 
 const TOKYO_LATITUDE = 35.65858;
 const TOKYO_LONGITUDE = 139.74549;
+const SHOWED_ADS_NUMBER = 4;
 
 const map = L.map('map-canvas')
   .on('load', ()=> {
@@ -46,4 +47,8 @@ mainMarker.on('moveend', (evt) => {
   adForm.querySelector('#address').value = coordinateStr;
 });
 
-drawMarkers(map);
+fetch('https://23.javascript.pages.academy/keksobooking/data')
+  .then((responce) => responce.json())
+  .then((data) => {
+    drawMarkers(map, data.slice(0, SHOWED_ADS_NUMBER));
+  });
