@@ -1,4 +1,4 @@
-import {setFormDisabled} from './utils.js';
+import {setFormDisabled, showAlert} from './utils.js';
 
 const MIN_NAME_LENGTH = 30;
 const MAX_NAME_LENGTH = 100;
@@ -24,16 +24,23 @@ export const setFormSubmit = (onSuccess) => {
 
     fetch('https://23.javascript.pages.academy/keksobooking',
       {
-        method: 'post',
+        method: 'POST',
         body: new FormData(evt.target),
       },
-    ).then (() => onSuccess());
+    )
+      .then ((responce) => {
+        if (responce.ok) {
+          onSuccess();
+        } else {
+          showAlert('Не удалось отправить форму.');
+        }
+      })
+      .catch(() => {
+        showAlert('Не удалось отправить форму. Попробуйте ещё раз');
+      });
   });
 };
 
-adForm.action = 'https://23.javascript.pages.academy/keksobooking';
-adForm.method = 'post';
-adForm.enctype = 'multipart/form-data';
 setFormDisabled(adForm);
 
 export const mapFiltersForm  = document.querySelector('.map__filters');

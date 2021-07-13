@@ -1,4 +1,4 @@
-//import {randomAds} from './data.js';
+import { map } from './map.js';
 
 const HOUSE_TYPE = {
   flat: 'Квартира',
@@ -50,7 +50,7 @@ const createCustomPopup = (ad) => {
   return newAdItem;
 };
 //создание маркера
-const createMarker = (ad, map) => {
+const createMarker = (ad) => {
   const currentIcon = L.icon ({
     iconUrl: '../img/pin.svg',
     iconSize: [38, 38],
@@ -68,9 +68,9 @@ const createMarker = (ad, map) => {
     .bindPopup(createCustomPopup(ad));
 };
 
-export const drawMarkers = (map, data) => {
+export const drawMarkers = (data) => {
   data.forEach((ad) => {
-    createMarker(ad, map);
+    createMarker(ad);
   });
 };
 
