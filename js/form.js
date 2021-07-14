@@ -1,3 +1,4 @@
+import { sendData } from './api.js';
 import {setFormDisabled, showAlert} from './utils.js';
 
 const MIN_NAME_LENGTH = 30;
@@ -22,22 +23,11 @@ export const setFormSubmit = (onSuccess) => {
   adForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
-    fetch('https://23.javascript.pages.academy/keksobooking',
-      {
-        method: 'POST',
-        body: new FormData(evt.target),
-      },
-    )
-      .then ((responce) => {
-        if (responce.ok) {
-          onSuccess();
-        } else {
-          showAlert('Не удалось отправить форму.');
-        }
-      })
-      .catch(() => {
-        showAlert('Не удалось отправить форму. Попробуйте ещё раз');
-      });
+    sendData(
+      () => onSuccess(),
+      () => showAlert('Не удалось отправить данные'),
+      new FormData(evt.target),
+    );
   });
 };
 
