@@ -1,4 +1,6 @@
 import {isEscEvent} from './utils.js';
+import { adForm } from './form.js';
+import { map } from './map.js';
 
 //модальное окно при удачной отправке
 const successModalTemplate = document.querySelector('#success')
@@ -19,6 +21,8 @@ successWindow.addEventListener ('keydown', (evt) => {
 
 export const openSuccessModal = () => {
   document.body.appendChild(successWindow);
+  adForm.reset();
+  map.invalidateSize();
 };
 
 //модальное окно при неудачной отправке
