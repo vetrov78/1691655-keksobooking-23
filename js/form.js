@@ -1,5 +1,5 @@
 import { sendData } from './api.js';
-import {setFormDisabled, showAlert} from './utils.js';
+import {setFormDisabled} from './utils.js';
 
 const MIN_NAME_LENGTH = 30;
 const MAX_NAME_LENGTH = 100;
@@ -18,19 +18,6 @@ const relationTypeMinPrice = {
 };
 
 export const adForm  = document.querySelector('.ad-form');
-//убираем автозагрузку формы
-export const setFormSubmit = (onSuccess) => {
-  adForm.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-
-    sendData(
-      () => onSuccess(),
-      () => showAlert('Не удалось отправить данные'),
-      new FormData(evt.target),
-    );
-  });
-};
-
 setFormDisabled(adForm);
 
 export const mapFiltersForm  = document.querySelector('.map__filters');
@@ -115,3 +102,15 @@ timeInInput.addEventListener('change', () => {
 timeOutInput.addEventListener('change', () => {
   timeInInput.value = timeOutInput.value;
 });
+
+export const setFormSubmit = (onSuccess, onFail) => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    sendData(
+      () => onSuccess(),
+      () => onFail(),
+      new FormData(evt.target),
+    );
+  });
+};

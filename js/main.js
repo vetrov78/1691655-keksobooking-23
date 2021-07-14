@@ -3,7 +3,7 @@ import './map.js';
 
 import { drawMarkers } from './markers.js';
 import { setFormSubmit } from './form.js';
-import {openSuccessModal} from './user-modals.js';
+import {openSuccessModal, openFailModal} from './user-modals.js';
 import { getData } from './api.js';
 
 const SHOWED_ADS_NUMBER = 9;
@@ -12,5 +12,5 @@ getData((ads) => {
   drawMarkers(ads.slice(0, SHOWED_ADS_NUMBER));
 });
 
-setFormSubmit(openSuccessModal);
+setFormSubmit(openSuccessModal, openFailModal);
 

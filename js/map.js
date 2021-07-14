@@ -23,12 +23,12 @@ L.tileLayer(
   },
 ).addTo(map);
 
+//добавление основного маркера на карту
 const mainIcon = L.icon({
   iconUrl: '../img/main-pin.svg',
   iconSize: [38, 38],
   iconAnchor: [19, 0],
 });
-
 const mainMarker = L.marker(
   {
     lat: TOKYO_LATITUDE,
