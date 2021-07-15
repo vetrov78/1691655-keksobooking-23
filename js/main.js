@@ -1,6 +1,5 @@
 import './form.js';
 import './map.js';
-
 import { drawMarkers } from './markers.js';
 import { setFormSubmit } from './form.js';
 import {openSuccessModal, openFailModal} from './user-modals.js';

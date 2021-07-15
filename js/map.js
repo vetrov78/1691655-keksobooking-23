@@ -22,7 +22,9 @@ L.tileLayer(
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   },
 ).addTo(map);
-
+//создаем слой для главного маркера, цель - разместить его поверх остальных
+map.createPane('mainMarker');
+map.getPane('mainMarker').style.zIndex = 999;
 //добавление основного маркера на карту
 const mainIcon = L.icon({
   iconUrl: '../img/main-pin.svg',
@@ -37,8 +39,10 @@ const mainMarker = L.marker(
   {
     icon: mainIcon,
     draggable: true,
+    pane: 'mainMarker',
   },
 );
+
 mainMarker.addTo(map);
 mainMarker.on('moveend', (evt) => {
   const coordinateStr = `${Number(evt.target.getLatLng().lat.toFixed(5))}, ${Number(evt.target.getLatLng().lng.toFixed(5))}`;

@@ -1,3 +1,5 @@
+//import { showMainMarker } from './map.js';
+
 const getData = (onSuccess) => {
   fetch('https://23.javascript.pages.academy/keksobooking/data')
     .then((responce) => responce.json())
