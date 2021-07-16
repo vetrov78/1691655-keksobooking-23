@@ -1,4 +1,5 @@
 import { map } from './map.js';
+const SHOWED_ADS_NUMBER = 10;
 
 const HOUSE_TYPE = {
   flat: 'Квартира',
@@ -67,10 +68,14 @@ const createMarker = (ad) => {
     .addTo(map)
     .bindPopup(createCustomPopup(ad));
 };
-
+//рисование маркеров из массива
 export const drawMarkers = (data) => {
-  data.forEach((ad) => {
-    createMarker(ad);
-  });
+  data
+    .slice()
+    //.filter((ad) => {ad.offer.price > 10000;})
+    .slice(0, SHOWED_ADS_NUMBER)
+    .forEach((ad) => {
+      createMarker(ad);
+    });
 };
 
