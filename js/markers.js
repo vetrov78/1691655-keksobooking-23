@@ -72,13 +72,8 @@ const createMarker = (ad) => {
 export const drawMarkers = (data) => {
   data
     .slice()
-    .filter((ad) => {
-      ad.offer.price > 10;
-    })
-    // .slice(0, SHOWED_ADS_NUMBER)
-    .forEach((ad) => {
-      createMarker(ad);
-      console.log(ad.offer.type);
-    });
+    .filter((el) => el.offer.type === 'house')
+    .slice(0, SHOWED_ADS_NUMBER)
+    .forEach((ad) => {createMarker(ad);});
 };
 
