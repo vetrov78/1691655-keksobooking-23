@@ -1,5 +1,6 @@
 import {isEscEvent} from './utils.js';
 import { adForm } from './form.js';
+import { setMainMarkerToInitial } from './map.js';
 
 export const openSuccessModal = () => {
   const successModalTemplate = document.querySelector('#success')
@@ -8,16 +9,20 @@ export const openSuccessModal = () => {
   const successWindow = successModalTemplate.cloneNode(true);
   document.body.appendChild(successWindow);
   adForm.reset();
+  setMainMarkerToInitial();
 
-  document.addEventListener ('keydown', (evt) => {
-    if (evt.key === 'Escape') {
+  const removeModalOnEsc = function (evt){
+    if (isEscEvent(evt)) {
       evt.preventDefault();
       successWindow.remove();
+      document.removeEventListener('keydown', removeModalOnEsc);
     }
-  });
+  };
+  document.addEventListener ('keydown', removeModalOnEsc);
 
   successWindow.addEventListener ('click', () => {
     successWindow.remove();
+    document.removeEventListener('keydown', removeModalOnEsc);
   });
 };
 

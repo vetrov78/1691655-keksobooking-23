@@ -4,11 +4,12 @@ import {setFormEnabled} from './utils.js';
 const TOKYO_LATITUDE = 35.65858;
 const TOKYO_LONGITUDE = 139.74549;
 
+adForm.querySelector('#address').value = `${TOKYO_LATITUDE}, ${TOKYO_LONGITUDE}`;
+
 export const map = L.map('map-canvas')
   .on('load', ()=> {
-    setFormEnabled(adForm);
-    adForm.querySelector('#address').value = `${TOKYO_LATITUDE}, ${TOKYO_LONGITUDE}`;
     adForm.querySelector('#address').readOnly = true;
+    setFormEnabled(adForm);
     setFormEnabled(mapFiltersForm);
   })
   .setView({
@@ -48,3 +49,8 @@ mainMarker.on('moveend', (evt) => {
   const coordinateStr = `${Number(evt.target.getLatLng().lat.toFixed(5))}, ${Number(evt.target.getLatLng().lng.toFixed(5))}`;
   adForm.querySelector('#address').value = coordinateStr;
 });
+
+export const setMainMarkerToInitial = () => {
+  mainMarker.setLatLng([TOKYO_LATITUDE, TOKYO_LONGITUDE]);
+  adForm.querySelector('#address').value = `${TOKYO_LATITUDE}, ${TOKYO_LONGITUDE}`;
+};
