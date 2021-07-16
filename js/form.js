@@ -97,13 +97,13 @@ timeOutInput.addEventListener('change', () => {
   timeInInput.value = timeOutInput.value;
 });
 //Изменение значений фильтров
-// const apartmentTypeSelect = mapFiltersForm.querySelector('#housing-type');
-// export const filterApartType = (cb) => {
-//   apartmentTypeSelect.addEventListener('change', (evt) => {
-//     console.log(evt.target.value);
-//   });
-//   cb();
-// };
+const apartmentTypeSelect = mapFiltersForm.querySelector('#housing-type');
+export const setApartChange = (cb) => {
+  apartmentTypeSelect.addEventListener('change', (evt) => {
+    console.log(evt.target.value);
+    cb();
+  });
+};
 // отправка данных на сервер
 export const setFormSubmit = (onSuccess, onFail) => {
   adForm.addEventListener('submit', (evt) => {
