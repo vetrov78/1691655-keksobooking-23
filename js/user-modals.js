@@ -1,47 +1,41 @@
 import {isEscEvent} from './utils.js';
 import { adForm } from './form.js';
-import { map } from './map.js';
-
-//модальное окно при удачной отправке
-const successModalTemplate = document.querySelector('#success')
-  .content
-  .querySelector('.success');
-const successWindow = successModalTemplate.cloneNode(true);
-
-successWindow.addEventListener ('click', () => {
-  successWindow.remove();
-});
-
-successWindow.addEventListener ('keydown', (evt) => {
-  if (isEscEvent(evt)) {
-    evt.preventDefault();
-    successWindow.remove();
-  }
-});
 
 export const openSuccessModal = () => {
+  const successModalTemplate = document.querySelector('#success')
+    .content
+    .querySelector('.success');
+  const successWindow = successModalTemplate.cloneNode(true);
   document.body.appendChild(successWindow);
   adForm.reset();
-  map.invalidateSize();
+
+  document.addEventListener ('keydown', (evt) => {
+    if (evt.key === 'Escape') {
+      evt.preventDefault();
+      successWindow.remove();
+    }
+  });
+
+  successWindow.addEventListener ('click', () => {
+    successWindow.remove();
+  });
 };
 
-//модальное окно при неудачной отправке
-const failModalTemplate = document.querySelector('#error')
-  .content
-  .querySelector('.error');
-const failWindow = failModalTemplate.cloneNode(true);
-
-failWindow.addEventListener ('click', () => {
-  failWindow.remove();
-});
-
-failWindow.addEventListener ('keydown', (evt) => {
-  if (isEscEvent(evt)) {
-    evt.preventDefault();
-    failWindow.remove();
-  }
-});
-
 export const openFailModal = () => {
+  const failModalTemplate = document.querySelector('#error')
+    .content
+    .querySelector('.error');
+  const failWindow = failModalTemplate.cloneNode(true);
   document.body.appendChild(failWindow);
+
+  document.addEventListener ('keydown', (evt) => {
+    if (isEscEvent(evt)) {
+      evt.preventDefault();
+      failWindow.remove();
+    }
+  });
+
+  failWindow.addEventListener ('click', () => {
+    failWindow.remove();
+  });
 };

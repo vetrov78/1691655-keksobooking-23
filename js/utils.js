@@ -48,9 +48,9 @@ export function setFormEnabled (formName, disableClassName='ad-form--disabled') 
   formName.classList.remove(disableClassName);
   [...formName.children].forEach((element) => {element.disabled = false;});
 }
-
-export const isEscEvent = (evt) => {
-  evt.key === 'Escape' || evt.key === 'Esc';
+// ######### Без return возвращала Undefined ###########
+export const isEscEvent = function(evt) {
+  return (evt.key === 'Escape' || evt.key === 'Esc');
 };
 
 export const showAlert = (message) => {
