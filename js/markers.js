@@ -1,3 +1,4 @@
+import { isFilterProperAd } from './form.js';
 import { map } from './map.js';
 const SHOWED_ADS_NUMBER = 10;
 
@@ -72,7 +73,7 @@ const createMarker = (ad) => {
 export const drawMarkers = (data) => {
   data
     .slice()
-    .filter((el) => el.offer.type === 'house')
+    .filter(isFilterProperAd)
     .slice(0, SHOWED_ADS_NUMBER)
     .forEach((ad) => {createMarker(ad);});
 };

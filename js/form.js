@@ -17,6 +17,13 @@ const relationTypeMinPrice = {
   'house': 5000,
   'palace': 10000,
 };
+//данные полей фильтра
+const filterValues = {
+  type: 'any',
+  price: 'any',
+  rooms: 'any',
+  guests: 'any',
+};
 //блокировка формы фильтрации и формы ввода нового объявления
 export const adForm  = document.querySelector('.ad-form');
 setFormDisabled(adForm);
@@ -98,11 +105,17 @@ timeOutInput.addEventListener('change', () => {
 });
 //Изменение значений фильтров
 const apartmentTypeSelect = mapFiltersForm.querySelector('#housing-type');
-export const setApartChange = (cb) => {
-  apartmentTypeSelect.addEventListener('change', (evt) => {
-    console.log(evt.target.value);
+export const setFilterChange = (cb) => {
+  apartmentTypeSelect.addEventListener('change', () => {
+    filterValues.type = document.querySelector('#housing-type').value;
+    console.log(filterValues);
     cb();
   });
+};
+//проверка объявление удовлетворяет фильтрам
+export const isFilterProperAd = function(element) {
+  //console.log(propertyType);
+  return filterValues.type === 'any' ? true : element.offer.type === filterValues.type;
 };
 // отправка данных на сервер
 export const setFormSubmit = (onSuccess, onFail) => {
