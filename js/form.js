@@ -1,7 +1,9 @@
+import { sendData } from './api.js';
 import {setFormDisabled} from './utils.js';
 
 const MIN_NAME_LENGTH = 30;
 const MAX_NAME_LENGTH = 100;
+
 const relationRoomsGuests = {
   '1':'1',
   '2':['1', '2'],
@@ -15,16 +17,12 @@ const relationTypeMinPrice = {
   'house': 5000,
   'palace': 10000,
 };
-
+//блокировка формы фильтрации и формы ввода нового объявления
 export const adForm  = document.querySelector('.ad-form');
-adForm.action = 'https://23.javascript.pages.academy/keksobooking';
-adForm.method = 'post';
-adForm.enctype = 'multipart/form-data';
 setFormDisabled(adForm);
-
 export const mapFiltersForm  = document.querySelector('.map__filters');
 setFormDisabled(mapFiltersForm);
-
+// валидация поля заголовка
 const titleInput = document.querySelector('#title');
 titleInput.addEventListener('input', () => {
   const valueLength = titleInput.value.length;
@@ -48,8 +46,7 @@ const timeOutInput = document.querySelector('#timeout');
 const isProperRelation = function (){
   return relationRoomsGuests[roomNumberInput.value].includes(apartmentCapacityInput.value);
 };
-
-//соответствие числа гостей количеству комнат
+//валидация соответствия числа гостей количеству комнат
 apartmentCapacityInput.addEventListener('change', () => {
   if (!isProperRelation()) {
     apartmentCapacityInput.setCustomValidity('Недопустимое число гостей');
@@ -60,8 +57,7 @@ apartmentCapacityInput.addEventListener('change', () => {
   }
   apartmentCapacityInput.reportValidity();
 });
-
-//соответствие числа комнат количеству гостей
+//валидация соответствия числа комнат количеству гостей
 roomNumberInput.addEventListener('change', () => {
   if (!isProperRelation()) {
     roomNumberInput.setCustomValidity('Несоответствие: комнаты-гости!');
@@ -72,7 +68,6 @@ roomNumberInput.addEventListener('change', () => {
   }
   roomNumberInput.reportValidity();
 });
-
 //добавляем атрибуты в поле ввода цены
 priceInput.min = relationTypeMinPrice[apartmentTypeInput.value];
 priceInput.placeholder = relationTypeMinPrice[apartmentTypeInput.value];
@@ -84,19 +79,16 @@ const isProperPrice = function () {
   }
   priceInput.reportValidity();
 };
-
 //при изменении типа жилья изменяется и минимальная цена
 apartmentTypeInput.addEventListener('change', () => {
   priceInput.min = relationTypeMinPrice[apartmentTypeInput.value];
   priceInput.placeholder = relationTypeMinPrice[apartmentTypeInput.value];
   isProperPrice();
 });
-
 //валидация цены за ночь
 priceInput.addEventListener('change', () => {
   isProperPrice();
 });
-
 //синхронизация времени заезда-выезда
 timeInInput.addEventListener('change', () => {
   timeOutInput.value = timeInInput.value;
@@ -104,3 +96,23 @@ timeInInput.addEventListener('change', () => {
 timeOutInput.addEventListener('change', () => {
   timeInInput.value = timeOutInput.value;
 });
+//Изменение значений фильтров
+const apartmentTypeSelect = mapFiltersForm.querySelector('#housing-type');
+export const setApartChange = (cb) => {
+  apartmentTypeSelect.addEventListener('change', (evt) => {
+    console.log(evt.target.value);
+    cb();
+  });
+};
+// отправка данных на сервер
+export const setFormSubmit = (onSuccess, onFail) => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    sendData(
+      () => onSuccess(),
+      () => onFail(),
+      new FormData(evt.target),
+    );
+  });
+};
