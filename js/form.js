@@ -26,6 +26,10 @@ const filterValues = {
   rooms: 'any',
   guests: 'any',
   wifi: false,
+  dishwasher: false,
+  parking: false,
+  washer: false,
+  conditioner: false,
 };
 //блокировка формы фильтрации и формы ввода нового объявления
 export const adForm  = document.querySelector('.ad-form');
@@ -112,6 +116,11 @@ const apartmentPriceSelect = mapFiltersForm.querySelector('#housing-price');
 const apartmentRoomsSelect = mapFiltersForm.querySelector('#housing-rooms');
 const apartmentGuestsSelect = mapFiltersForm.querySelector('#housing-guests');
 const availabilityWiFi = mapFiltersForm.querySelector('#filter-wifi');
+const availabilityDishWasher = mapFiltersForm.querySelector('#filter-dishwasher');
+const availabilityParking = mapFiltersForm.querySelector('#filter-parking');
+const availabilityWasher = mapFiltersForm.querySelector('#filter-washer');
+const availabilityElevator = mapFiltersForm.querySelector('#filter-elevator');
+const availabilityConditioner = mapFiltersForm.querySelector('#filter-conditioner');
 export const setFilterChange = (cb) => {
   //выпадающие списки
   apartmentTypeSelect.addEventListener('change', () => {
@@ -133,6 +142,26 @@ export const setFilterChange = (cb) => {
   //чекбоксы
   availabilityWiFi.addEventListener('change', () => {
     filterValues.wifi = availabilityWiFi.checked;
+    cb();
+  });
+  availabilityDishWasher.addEventListener('change', () => {
+    filterValues.dishwasher = availabilityDishWasher.checked;
+    cb();
+  });
+  availabilityParking.addEventListener('change', () => {
+    filterValues.parking = availabilityParking.checked;
+    cb();
+  });
+  availabilityWasher.addEventListener('change', () => {
+    filterValues.washer = availabilityWasher.checked;
+    cb();
+  });
+  availabilityElevator.addEventListener('change', () => {
+    filterValues.elevator = availabilityElevator.checked;
+    cb();
+  });
+  availabilityConditioner.addEventListener('change', () => {
+    filterValues.conditioner = availabilityConditioner.checked;
     cb();
   });
 };
@@ -160,8 +189,16 @@ export const isFilterProperAd = function(element) {
   const checkRooms = filterValues.rooms === 'any' ? true : element.offer.rooms == filterValues.rooms;
   // eslint-disable-next-line eqeqeq
   const checkGuests = filterValues.guests === 'any' ? true : element.offer.guests == filterValues.guests;
+  const checkOptions = checkApartType && checkPrice && checkRooms && checkGuests;
   const checkWiFi = isOptionIncluded('wifi');
-  return checkApartType && checkPrice && checkRooms && checkGuests && checkWiFi;
+  const checkDishWasher = isOptionIncluded('dishwasher');
+  const checkParking = isOptionIncluded('parking');
+  const checkWasher = isOptionIncluded('washer');
+  const checkElevator = isOptionIncluded('elevator');
+  const checkConditioner = isOptionIncluded('conditioner');
+  const checkAdditionalFeatures = checkWiFi && checkDishWasher && checkParking && checkWasher && checkElevator && checkConditioner;
+
+  return checkOptions && checkAdditionalFeatures;
 };
 
 // отправка данных на сервер
