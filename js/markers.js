@@ -1,3 +1,4 @@
+import { isFilterProperAd } from './form.js';
 import { map } from './map.js';
 const SHOWED_ADS_NUMBER = 10;
 
@@ -50,6 +51,8 @@ const createCustomPopup = (ad) => {
 
   return newAdItem;
 };
+//создаем группу и добавляем маркеры объявлений, при изменении фильтра - очищаем группу
+const markersGroup = new L.LayerGroup().addTo(map);
 //создание маркера
 const createMarker = (ad) => {
   const currentIcon = L.icon ({
@@ -64,15 +67,15 @@ const createMarker = (ad) => {
   {
     icon: currentIcon,
   });
-  currentMarker
-    .addTo(map)
-    .bindPopup(createCustomPopup(ad));
+  markersGroup.addLayer(currentMarker);
+  currentMarker.bindPopup(createCustomPopup(ad));
 };
 //рисование маркеров из массива
 export const drawMarkers = (data) => {
+  markersGroup.clearLayers();
   data
     .slice()
-    .filter((el) => el.offer.type === 'house')
+    .filter(isFilterProperAd)
     .slice(0, SHOWED_ADS_NUMBER)
     .forEach((ad) => {createMarker(ad);});
 };
