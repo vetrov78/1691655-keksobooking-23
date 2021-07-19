@@ -119,12 +119,6 @@ const apartmentRoomsSelect = mapFiltersForm.querySelector('#housing-rooms');
 const apartmentGuestsSelect = mapFiltersForm.querySelector('#housing-guests');
 //Чекбоксы
 const nodesAdditionalFeatures = mapFiltersForm.querySelectorAll('.map__checkbox');
-// const availabilityWiFi = mapFiltersForm.querySelector('#filter-wifi');
-// const availabilityDishWasher = mapFiltersForm.querySelector('#filter-dishwasher');
-// const availabilityParking = mapFiltersForm.querySelector('#filter-parking');
-// const availabilityWasher = mapFiltersForm.querySelector('#filter-washer');
-// const availabilityElevator = mapFiltersForm.querySelector('#filter-elevator');
-// const availabilityConditioner = mapFiltersForm.querySelector('#filter-conditioner');
 
 export const setFilterChange = (cb) => {
   const updateFeaturesArray = () => {
@@ -156,30 +150,6 @@ export const setFilterChange = (cb) => {
       cb();
     });
   });
-  // availabilityWiFi.addEventListener('change', () => {
-  //   filterValues.wifi = availabilityWiFi.checked;
-  //   cb();
-  // });
-  // availabilityDishWasher.addEventListener('change', () => {
-  //   filterValues.dishwasher = availabilityDishWasher.checked;
-  //   cb();
-  // });
-  // availabilityParking.addEventListener('change', () => {
-  //   filterValues.parking = availabilityParking.checked;
-  //   cb();
-  // });
-  // availabilityWasher.addEventListener('change', () => {
-  //   filterValues.washer = availabilityWasher.checked;
-  //   cb();
-  // });
-  // availabilityElevator.addEventListener('change', () => {
-  //   filterValues.elevator = availabilityElevator.checked;
-  //   cb();
-  // });
-  // availabilityConditioner.addEventListener('change', () => {
-  //   filterValues.conditioner = availabilityConditioner.checked;
-  //   cb();
-  // });
 };
 //проверка соответствия объявления фильтрам
 export const isFilterProperAd = function(element) {
@@ -192,13 +162,6 @@ export const isFilterProperAd = function(element) {
       return adPrice >= MIDDLE_PRICE_LIMIT;
     }
   };
-  const isOptionIncluded = (option) => {
-    if (element.offer.features !== undefined) {
-      return filterValues[option] ? element.offer.features.includes(option) : true;
-    } else {
-      return false;
-    }
-  };
   const checkApartType = filterValues.type === 'any' ? true : element.offer.type === filterValues.type;
   const checkPrice = filterValues.price === 'any' ? true : isPriceInRange(element.offer.price, filterValues.price);
   // eslint-disable-next-line eqeqeq
@@ -207,21 +170,16 @@ export const isFilterProperAd = function(element) {
   const checkGuests = filterValues.guests === 'any' ? true : element.offer.guests == filterValues.guests;
   const checkOptions = checkApartType && checkPrice && checkRooms && checkGuests;
 
-  const checkAdditionalFeatures = true;
-  for (const k in additionalFeatures) {
-    console.log(k);
-    // if (additionalFeatures[k]) {
-    //   checkAdditionalFeatures = checkAdditionalFeatures && element.offer.features.includes(k);
-    // }
+  let checkAdditionalFeatures = true;
+  if (element.offer.features === undefined) {
+    //в объявлении не указаны дополнительные опции
+    checkAdditionalFeatures = false;
+  } else {
+    for (const [k, v] of Object.entries(additionalFeatures)) {
+      if (v) {
+        checkAdditionalFeatures = checkAdditionalFeatures && element.offer.features.includes(k);}
+    }
   }
-  // const checkWiFi = isOptionIncluded('wifi');
-  // const checkDishWasher = isOptionIncluded('dishwasher');
-  // const checkParking = isOptionIncluded('parking');
-  // const checkWasher = isOptionIncluded('washer');
-  // const checkElevator = isOptionIncluded('elevator');
-  // const checkConditioner = isOptionIncluded('conditioner');
-  // const checkAdditionalFeatures = checkWiFi && checkDishWasher && checkParking && checkWasher && checkElevator && checkConditioner;
-
   return checkOptions && checkAdditionalFeatures;
 };
 
