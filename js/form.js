@@ -25,6 +25,8 @@ const filterValues = {
   price: 'any',
   rooms: 'any',
   guests: 'any',
+};
+const additionalFeatures = {
   wifi: false,
   dishwasher: false,
   parking: false,
@@ -110,18 +112,26 @@ timeInInput.addEventListener('change', () => {
 timeOutInput.addEventListener('change', () => {
   timeInInput.value = timeOutInput.value;
 });
-//Изменение значений фильтров выпадающих списков
+//Выпадающиt списки
 const apartmentTypeSelect = mapFiltersForm.querySelector('#housing-type');
 const apartmentPriceSelect = mapFiltersForm.querySelector('#housing-price');
 const apartmentRoomsSelect = mapFiltersForm.querySelector('#housing-rooms');
 const apartmentGuestsSelect = mapFiltersForm.querySelector('#housing-guests');
-const availabilityWiFi = mapFiltersForm.querySelector('#filter-wifi');
-const availabilityDishWasher = mapFiltersForm.querySelector('#filter-dishwasher');
-const availabilityParking = mapFiltersForm.querySelector('#filter-parking');
-const availabilityWasher = mapFiltersForm.querySelector('#filter-washer');
-const availabilityElevator = mapFiltersForm.querySelector('#filter-elevator');
-const availabilityConditioner = mapFiltersForm.querySelector('#filter-conditioner');
+//Чекбоксы
+const nodesAdditionalFeatures = mapFiltersForm.querySelectorAll('.map__checkbox');
+// const availabilityWiFi = mapFiltersForm.querySelector('#filter-wifi');
+// const availabilityDishWasher = mapFiltersForm.querySelector('#filter-dishwasher');
+// const availabilityParking = mapFiltersForm.querySelector('#filter-parking');
+// const availabilityWasher = mapFiltersForm.querySelector('#filter-washer');
+// const availabilityElevator = mapFiltersForm.querySelector('#filter-elevator');
+// const availabilityConditioner = mapFiltersForm.querySelector('#filter-conditioner');
+
 export const setFilterChange = (cb) => {
+  const updateFeaturesArray = () => {
+    nodesAdditionalFeatures.forEach((feature) => {
+      additionalFeatures[feature.value] = feature.checked;
+    });
+  };
   //выпадающие списки
   apartmentTypeSelect.addEventListener('change', () => {
     filterValues.type = apartmentTypeSelect.value;
@@ -140,30 +150,36 @@ export const setFilterChange = (cb) => {
     cb();
   });
   //чекбоксы
-  availabilityWiFi.addEventListener('change', () => {
-    filterValues.wifi = availabilityWiFi.checked;
-    cb();
+  nodesAdditionalFeatures.forEach((feature) => {
+    feature.addEventListener('change', () => {
+      updateFeaturesArray();
+      cb();
+    });
   });
-  availabilityDishWasher.addEventListener('change', () => {
-    filterValues.dishwasher = availabilityDishWasher.checked;
-    cb();
-  });
-  availabilityParking.addEventListener('change', () => {
-    filterValues.parking = availabilityParking.checked;
-    cb();
-  });
-  availabilityWasher.addEventListener('change', () => {
-    filterValues.washer = availabilityWasher.checked;
-    cb();
-  });
-  availabilityElevator.addEventListener('change', () => {
-    filterValues.elevator = availabilityElevator.checked;
-    cb();
-  });
-  availabilityConditioner.addEventListener('change', () => {
-    filterValues.conditioner = availabilityConditioner.checked;
-    cb();
-  });
+  // availabilityWiFi.addEventListener('change', () => {
+  //   filterValues.wifi = availabilityWiFi.checked;
+  //   cb();
+  // });
+  // availabilityDishWasher.addEventListener('change', () => {
+  //   filterValues.dishwasher = availabilityDishWasher.checked;
+  //   cb();
+  // });
+  // availabilityParking.addEventListener('change', () => {
+  //   filterValues.parking = availabilityParking.checked;
+  //   cb();
+  // });
+  // availabilityWasher.addEventListener('change', () => {
+  //   filterValues.washer = availabilityWasher.checked;
+  //   cb();
+  // });
+  // availabilityElevator.addEventListener('change', () => {
+  //   filterValues.elevator = availabilityElevator.checked;
+  //   cb();
+  // });
+  // availabilityConditioner.addEventListener('change', () => {
+  //   filterValues.conditioner = availabilityConditioner.checked;
+  //   cb();
+  // });
 };
 //проверка соответствия объявления фильтрам
 export const isFilterProperAd = function(element) {
@@ -190,13 +206,21 @@ export const isFilterProperAd = function(element) {
   // eslint-disable-next-line eqeqeq
   const checkGuests = filterValues.guests === 'any' ? true : element.offer.guests == filterValues.guests;
   const checkOptions = checkApartType && checkPrice && checkRooms && checkGuests;
-  const checkWiFi = isOptionIncluded('wifi');
-  const checkDishWasher = isOptionIncluded('dishwasher');
-  const checkParking = isOptionIncluded('parking');
-  const checkWasher = isOptionIncluded('washer');
-  const checkElevator = isOptionIncluded('elevator');
-  const checkConditioner = isOptionIncluded('conditioner');
-  const checkAdditionalFeatures = checkWiFi && checkDishWasher && checkParking && checkWasher && checkElevator && checkConditioner;
+
+  const checkAdditionalFeatures = true;
+  for (const k in additionalFeatures) {
+    console.log(k);
+    // if (additionalFeatures[k]) {
+    //   checkAdditionalFeatures = checkAdditionalFeatures && element.offer.features.includes(k);
+    // }
+  }
+  // const checkWiFi = isOptionIncluded('wifi');
+  // const checkDishWasher = isOptionIncluded('dishwasher');
+  // const checkParking = isOptionIncluded('parking');
+  // const checkWasher = isOptionIncluded('washer');
+  // const checkElevator = isOptionIncluded('elevator');
+  // const checkConditioner = isOptionIncluded('conditioner');
+  // const checkAdditionalFeatures = checkWiFi && checkDishWasher && checkParking && checkWasher && checkElevator && checkConditioner;
 
   return checkOptions && checkAdditionalFeatures;
 };
