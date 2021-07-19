@@ -121,6 +121,7 @@ const apartmentGuestsSelect = mapFiltersForm.querySelector('#housing-guests');
 const nodesAdditionalFeatures = mapFiltersForm.querySelectorAll('.map__checkbox');
 
 export const setFilterChange = (cb) => {
+  //обновление списка чекбоксов дополнительных опций
   const updateFeaturesArray = () => {
     nodesAdditionalFeatures.forEach((feature) => {
       additionalFeatures[feature.value] = feature.checked;
@@ -164,10 +165,8 @@ export const isFilterProperAd = function(element) {
   };
   const checkApartType = filterValues.type === 'any' ? true : element.offer.type === filterValues.type;
   const checkPrice = filterValues.price === 'any' ? true : isPriceInRange(element.offer.price, filterValues.price);
-  // eslint-disable-next-line eqeqeq
-  const checkRooms = filterValues.rooms === 'any' ? true : element.offer.rooms == filterValues.rooms;
-  // eslint-disable-next-line eqeqeq
-  const checkGuests = filterValues.guests === 'any' ? true : element.offer.guests == filterValues.guests;
+  const checkRooms = filterValues.rooms === 'any' ? true : element.offer.rooms.toString() === filterValues.rooms;
+  const checkGuests = filterValues.guests === 'any' ? true : element.offer.guests.toString() === filterValues.guests;
   const checkOptions = checkApartType && checkPrice && checkRooms && checkGuests;
 
   let checkAdditionalFeatures = true;
