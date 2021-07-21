@@ -11,18 +11,18 @@ export const openSuccessModal = () => {
   adForm.reset();
   setMainMarkerToInitial();
 
-  const removeModalOnEsc = function (evt){
+  const onEscRemoveModal = (evt) => {
     if (isEscEvent(evt)) {
       evt.preventDefault();
       successWindow.remove();
-      document.removeEventListener('keydown', removeModalOnEsc);
+      document.removeEventListener('keydown', onEscRemoveModal);
     }
   };
-  document.addEventListener ('keydown', removeModalOnEsc);
+  document.addEventListener ('keydown', onEscRemoveModal);
 
   successWindow.addEventListener ('click', () => {
     successWindow.remove();
-    document.removeEventListener('keydown', removeModalOnEsc);
+    document.removeEventListener('keydown', onEscRemoveModal);
   });
 };
 
