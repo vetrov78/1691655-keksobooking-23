@@ -1,5 +1,5 @@
 import {isEscEvent} from './utils.js';
-import { adForm, mapFiltersForm } from './form.js';
+import { adForm, defaultAdditionalFeatures, defaultFilterValues, mapFiltersForm } from './form.js';
 import { setMainMarkerToInitial } from './map.js';
 
 export const openSuccessModal = () => {
@@ -11,6 +11,8 @@ export const openSuccessModal = () => {
   adForm.reset();
   mapFiltersForm.reset();
   setMainMarkerToInitial();
+  defaultFilterValues();
+  defaultAdditionalFeatures();
 
   const onEscRemoveModal = (evt) => {
     if (isEscEvent(evt)) {

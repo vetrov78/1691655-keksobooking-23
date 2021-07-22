@@ -37,7 +37,12 @@ const additionalFeatures = {
   washer: false,
   conditioner: false,
 };
-
+export const defaultFilterValues = () => {
+  Object.keys(filterValues).forEach((k) => filterValues[k] = 'any');
+};
+export const defaultAdditionalFeatures = () => {
+  Object.keys(additionalFeatures).forEach((k) => filterValues[k] = false);
+};
 //блокировка формы фильтрации и формы ввода нового объявления
 export const adForm  = document.querySelector('.ad-form');
 setFormDisabled(adForm);
