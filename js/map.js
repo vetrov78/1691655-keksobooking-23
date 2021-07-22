@@ -46,11 +46,11 @@ mainMarker.on('moveend', (evt) => {
 });
 
 export const setMainMarkerToInitial = () => {
-  mainMarker.setLatLng([TOKYO_COORDINATES.lat, TOKYO_COORDINATES.lng]);
-  adForm.querySelector('#address').value = `${TOKYO_COORDINATES.lat}, ${TOKYO_COORDINATES.lng}`;
+  setTimeout(() => {
+    mainMarker.setLatLng([TOKYO_COORDINATES.lat, TOKYO_COORDINATES.lng]);
+    adForm.querySelector('#address').value = `${TOKYO_COORDINATES.lat}, ${TOKYO_COORDINATES.lng}`;
+  }, 10);
 };
 
-adForm.addEventListener('reset', (evt) => {
-
-  setMainMarkerToInitial();
-});
+const resetButton = adForm.querySelector('.ad-form__reset');
+resetButton.onclick = setMainMarkerToInitial;
