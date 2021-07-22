@@ -170,13 +170,11 @@ export const isFilterProperAd = function(element) {
   const checkOptions = checkApartType && checkPrice && checkRooms && checkGuests;
 
   let checkAdditionalFeatures = true;
-  if (element.offer.features === undefined) {
-    //в объявлении не указаны дополнительные опции
-    checkAdditionalFeatures = false;
-  } else {
-    for (const [k, v] of Object.entries(additionalFeatures)) {
-      if (v) {
-        checkAdditionalFeatures = checkAdditionalFeatures && element.offer.features.includes(k);}
+  for (const [k, v] of Object.entries(additionalFeatures)) {
+    if (v) {
+      if (element.offer.features !== undefined) {
+        checkAdditionalFeatures = checkAdditionalFeatures && element.offer.features.includes(k);
+      } else {checkAdditionalFeatures = false;}
     }
   }
   return checkOptions && checkAdditionalFeatures;
