@@ -1,5 +1,3 @@
-//import { showMainMarker } from './map.js';
-
 const getData = (onSuccess) => {
   fetch('https://23.javascript.pages.academy/keksobooking/data')
     .then((responce) => responce.json())
@@ -8,7 +6,7 @@ const getData = (onSuccess) => {
     });
 };
 
-const sendData = (onSuccess, onFail, body) => {
+const sendData = (onSuccess, onFail, reDraw, body) => {
   fetch('https://23.javascript.pages.academy/keksobooking',
     {
       method: 'POST',
@@ -18,6 +16,7 @@ const sendData = (onSuccess, onFail, body) => {
     .then ((responce) => {
       if (responce.ok) {
         onSuccess();
+        reDraw();
       } else {
         onFail();
       }

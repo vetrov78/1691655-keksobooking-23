@@ -12,7 +12,5 @@ const TIMEOUT_DELAY = 500;
 getData((ads) => {
   drawMarkers(ads);
   setFilterChange(debounce(() => drawMarkers(ads), TIMEOUT_DELAY));
+  setFormSubmit(openSuccessModal, openFailModal, () => drawMarkers(ads) );
 });
-
-setFormSubmit(openSuccessModal, openFailModal);
-

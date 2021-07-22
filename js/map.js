@@ -1,10 +1,5 @@
-import {adForm, mapFiltersForm} from './form.js';
+import {adForm, mapFiltersForm, TOKYO_COORDINATES} from './form.js';
 import {setFormEnabled} from './utils.js';
-
-const TOKYO_LATITUDE = 35.65858;
-const TOKYO_LONGITUDE = 139.74549;
-
-adForm.querySelector('#address').value = `${TOKYO_LATITUDE}, ${TOKYO_LONGITUDE}`;
 
 export const map = L.map('map-canvas')
   .on('load', ()=> {
@@ -13,8 +8,8 @@ export const map = L.map('map-canvas')
     setFormEnabled(mapFiltersForm);
   })
   .setView({
-    lat: TOKYO_LATITUDE,
-    lng: TOKYO_LONGITUDE,
+    lat: TOKYO_COORDINATES.lat,
+    lng: TOKYO_COORDINATES.lng,
   }, 12);
 
 L.tileLayer(
@@ -34,8 +29,8 @@ const mainIcon = L.icon({
 });
 const mainMarker = L.marker(
   {
-    lat: TOKYO_LATITUDE,
-    lng: TOKYO_LONGITUDE,
+    lat: TOKYO_COORDINATES.lat,
+    lng: TOKYO_COORDINATES.lng,
   },
   {
     icon: mainIcon,
@@ -51,6 +46,11 @@ mainMarker.on('moveend', (evt) => {
 });
 
 export const setMainMarkerToInitial = () => {
-  mainMarker.setLatLng([TOKYO_LATITUDE, TOKYO_LONGITUDE]);
-  adForm.querySelector('#address').value = `${TOKYO_LATITUDE}, ${TOKYO_LONGITUDE}`;
+  mainMarker.setLatLng([TOKYO_COORDINATES.lat, TOKYO_COORDINATES.lng]);
+  adForm.querySelector('#address').value = `${TOKYO_COORDINATES.lat}, ${TOKYO_COORDINATES.lng}`;
 };
+
+adForm.addEventListener('reset', (evt) => {
+
+  setMainMarkerToInitial();
+});

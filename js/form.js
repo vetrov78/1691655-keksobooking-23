@@ -5,6 +5,10 @@ const MIN_NAME_LENGTH = 30;
 const MAX_NAME_LENGTH = 100;
 const LOW_PRICE_LIMIT = 10000;
 const MIDDLE_PRICE_LIMIT = 50000;
+export const TOKYO_COORDINATES = {
+  lat: 35.65858,
+  lng: 139.74549,
+};
 
 const relationRoomsGuests = {
   '1':'1',
@@ -33,9 +37,11 @@ const additionalFeatures = {
   washer: false,
   conditioner: false,
 };
+
 //блокировка формы фильтрации и формы ввода нового объявления
 export const adForm  = document.querySelector('.ad-form');
 setFormDisabled(adForm);
+adForm.querySelector('#address').value = `${TOKYO_COORDINATES.lat}, ${TOKYO_COORDINATES.lng}`;
 export const mapFiltersForm  = document.querySelector('.map__filters');
 setFormDisabled(mapFiltersForm);
 // валидация поля заголовка
@@ -58,7 +64,6 @@ const apartmentTypeInput = document.querySelector('#type');
 const priceInput = document.querySelector('#price');
 const timeInInput = document.querySelector('#timein');
 const timeOutInput = document.querySelector('#timeout');
-
 const isProperRelation = function (){
   return relationRoomsGuests[roomNumberInput.value].includes(apartmentCapacityInput.value);
 };
@@ -179,15 +184,15 @@ export const isFilterProperAd = function(element) {
   }
   return checkOptions && checkAdditionalFeatures;
 };
-
 // отправка данных на сервер
-export const setFormSubmit = (onSuccess, onFail) => {
+export const setFormSubmit = (onSuccess, onFail, reDraw) => {
   adForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
     sendData(
       () => onSuccess(),
       () => onFail(),
+      () => reDraw(),
       new FormData(evt.target),
     );
   });

@@ -1,5 +1,5 @@
 import {isEscEvent} from './utils.js';
-import { adForm } from './form.js';
+import { adForm, mapFiltersForm } from './form.js';
 import { setMainMarkerToInitial } from './map.js';
 
 export const openSuccessModal = () => {
@@ -9,6 +9,7 @@ export const openSuccessModal = () => {
   const successWindow = successModalTemplate.cloneNode(true);
   document.body.appendChild(successWindow);
   adForm.reset();
+  mapFiltersForm.reset();
   setMainMarkerToInitial();
 
   const onEscRemoveModal = (evt) => {
@@ -19,7 +20,6 @@ export const openSuccessModal = () => {
     }
   };
   document.addEventListener ('keydown', onEscRemoveModal);
-
   successWindow.addEventListener ('click', () => {
     successWindow.remove();
     document.removeEventListener('keydown', onEscRemoveModal);
