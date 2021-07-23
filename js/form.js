@@ -41,7 +41,7 @@ export const defaultFilterValues = () => {
   Object.keys(filterValues).forEach((k) => filterValues[k] = 'any');
 };
 export const defaultAdditionalFeatures = () => {
-  Object.keys(additionalFeatures).forEach((k) => filterValues[k] = false);
+  Object.keys(additionalFeatures).forEach((k) => additionalFeatures[k] = false);
 };
 //блокировка формы фильтрации и формы ввода нового объявления
 export const adForm  = document.querySelector('.ad-form');
@@ -200,5 +200,16 @@ export const setFormSubmit = (onSuccess, onFail, reDraw) => {
       () => reDraw(),
       new FormData(evt.target),
     );
+  });
+};
+
+export const setFortmReset = (cb) => {
+  adForm.querySelector('.ad-form__reset').addEventListener('click', (evt) => {
+    evt.preventDefault();
+    adForm.reset();
+    mapFiltersForm.reset();
+    defaultAdditionalFeatures();
+    defaultFilterValues();
+    cb();
   });
 };
